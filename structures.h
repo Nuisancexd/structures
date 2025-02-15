@@ -363,6 +363,7 @@ public:
 			sque->ptr = NULL;
 			sque->tptr = &sque->ptr;
 		}
+		delete &sque->ptr;
 		return *this;
 	}
 
