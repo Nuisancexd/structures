@@ -8,6 +8,9 @@
 #include "structures.h"
 
 
+
+
+
 typedef struct data
 {
 	int i;
@@ -57,19 +60,20 @@ int main()
 	//*list = *list_concat;
 	list->SLIST_CONCAT(list_concat);
 
-	PDATA dat_ = new DATA;
-	VOID* ptrf = dat_;
+	PDATA dat_ = NULL;	
 	std::cout << "\nCONCAT\n";
 	SLIST_FOREACH(dat_, list)
 	{
 		std::cout << dat_->i << std::endl;
 	}
 
-	free(ptrf);
+	
 	delete list;
 
 	_CrtDumpMemoryLeaks();
 	return EXIT_SUCCESS;
 
 }
+
+
 
