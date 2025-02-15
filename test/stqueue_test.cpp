@@ -1,3 +1,11 @@
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#define DBG_NEW new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define newDBG_NEW
+
+
+#include <iostream>
+#include "structures.h"
 
 typedef struct data
 {
@@ -29,8 +37,7 @@ int main()
 	que->STQUEUE_INSERT_AFTER(dat_after, ptr_);
 
 	
-	PDATA dat = new DATA;
-	VOID* f = dat;
+	PDATA dat = NULL;
 	STQUEUE_FOREACH(dat, que)
 	{
 		std::cout << dat->i << std::endl;
@@ -69,8 +76,9 @@ int main()
 	}
 	
 
-	free(f);
 	delete que;
 	_CrtDumpMemoryLeaks();
 	return EXIT_SUCCESS;
 }
+
+
