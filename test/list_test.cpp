@@ -48,9 +48,7 @@ int main()
 	//list->LIST_INSERT_BEFORE(sp, dat_a);
 
 
-	PDATA dat = new DATA;
-	void* ptr = dat;
-	
+	PDATA dat = NULL;
 	for (dat = list->ptr; dat; dat = dat->next)
 	{
 		std::cout << dat->i << std::endl;
@@ -96,8 +94,7 @@ int main()
 	*list = *list_concat;
 
 
-	PDATA datc = new DATA;
-	void* ptr_c = datc;
+	PDATA datc = NULL;	
 	std::cout << "\nLIST CONCAT\n";
 	LIST_FOREACH(datc, list)
 	{
@@ -109,8 +106,6 @@ int main()
 		std::cout << datc->i << std::endl;
 	}
 
-	free(ptr_c);
-	free(ptr);
 	delete list;
 	_CrtDumpMemoryLeaks();
 	return EXIT_SUCCESS;
