@@ -11,6 +11,7 @@
 #define VOID void
 
 #define PTR(elm) (void*&)elm
+	
 
 #define SLIST_ENTRY(type) type* entries;
 
@@ -96,8 +97,7 @@ public:
 	/*	not from head  */	
 	inline VOID SLIST_REMOVE_ELM(TYPE*& entry_ptr)
 	{
-		TYPE* p_elm = (TYPE*)operator new(sizeof(TYPE));
-		TYPE* fp = p_elm;
+		TYPE* p_elm = NULL;
 		TYPE* prev = NULL;
 		for (p_elm = (TYPE*)SLIST_HEAD(); p_elm; p_elm = p_elm->entries)
 		{
@@ -110,7 +110,6 @@ public:
 			}			
 			prev = p_elm;
 		}
-		delete fp;
 		delete entry_ptr;
 	}
 
@@ -118,32 +117,27 @@ public:
 	template<typename T, typename F>
 	inline TYPE* LIST_FIND_ELM(T F::* field, const T& entry_ptr)
 	{
-		TYPE* p_elm = (TYPE*)operator new(sizeof(TYPE));
-		VOID* free_p = p_elm;
+		TYPE* p_elm = NULL;		
 		for (p_elm = (TYPE*)SLIST_HEAD(); p_elm; p_elm = p_elm->entries)
 		{
 			if (p_elm->*field == entry_ptr)
 			{
-				free(free_p);
 				return p_elm;
 			}
 		}
-		free(free_p);
 		return NULL;
 	}
 
 private:
 	VOID SLIST_DESTROY()
 	{
-		TYPE* p_elm = (TYPE*)operator new(sizeof(TYPE));
-		VOID* ptr_ = p_elm;
+		TYPE* p_elm = NULL;
 		while (!SLIST_EMPTY())
 		{
 			p_elm = (TYPE*)SLIST_HEAD();
 			ptr = p_elm->entries;
 			delete p_elm;
-		}
-		free(ptr_);
+		}		
 	}
 };
 
@@ -285,17 +279,14 @@ public:
 	template<typename T, typename F>
 	inline TYPE* LIST_FIND_ELM(T F::*field, const T& entry_ptr)
 	{
-		TYPE* p_elm = (TYPE*)operator new(sizeof(TYPE));
-		VOID* free_p = p_elm;
+		TYPE* p_elm = NULL;		
 		for (p_elm = (TYPE*)LIST_HEAD(); p_elm; p_elm = p_elm->next)
 		{
 			if (p_elm->*field == entry_ptr)
 			{
-				free(free_p);
 				return p_elm;
 			}
 		}
-		free(free_p);
 		return NULL;
 	}
 
@@ -327,8 +318,7 @@ public:
 private:
 	VOID LIST_DESTROY()
 	{
-		TYPE* p_elm = (TYPE*)operator new(sizeof(TYPE));
-		VOID* ptr_ = p_elm;
+		TYPE* p_elm = NULL;
 		while (!LIST_EMPTY())
 		{
 			p_elm = (TYPE*)LIST_HEAD();
@@ -336,7 +326,6 @@ private:
 			delete p_elm;
 		}
 		tptr = NULL;
-		free(ptr_);
 	}
 };
 
@@ -356,7 +345,7 @@ class STQUEUE
 public:
 
 	TYPE* ptr = NULL;	/*	HEAD  */
-	TYPE** tptr = &ptr;	/*	TAIL  */
+	TYPE** tptr = &ptr;
 
 	~STQUEUE()
 	{
